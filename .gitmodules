@@ -1,0 +1,3 @@
+[submodule "cjam"]
+	path = cjam
+	url = git@github.com:jdah/cjam.git
