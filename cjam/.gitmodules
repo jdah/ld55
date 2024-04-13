@@ -1,0 +1,12 @@
+[submodule "lib/cglm"]
+	path = lib/cglm
+	url = https://github.com/recp/cglm
+[submodule "lib/sokol-tools-bin"]
+	path = lib/sokol-tools-bin
+	url = https://github.com/floooh/sokol-tools-bin
+[submodule "lib/sokol"]
+	path = lib/sokol
+	url = https://github.com/floooh/sokol
+[submodule "lib/soloud"]
+	path = lib/soloud
+	url = https://github.com/jarikomppa/soloud

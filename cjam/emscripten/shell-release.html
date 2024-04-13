@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+
+    <script type='text/javascript'>
+        var lastTarget, canvas, body;
+window.onload = function() {
+  body   = document.querySelector('body'),
+  canvas = document.getElementById('canvas');
+  var activateCanvas = function (event) {
+    lastTarget = event.target;
+    window.focus();
+    console.log("Set focus on window");
+  }
+  var preventScroll = function (event) {
+    var keyCodes = [ 32, 37, 38, 39, 40 ];
+    if (lastTarget != canvas) {
+      return false;
+    }
+    console.log('Key pressed: ' + event.keyCode);
+    if (keyCodes.includes(event.keyCode)) {
+      event.preventDefault();
+    }
+  }
+  var handleMouseDown = function (event) {
+    window.focus();
+    event.preventDefault();
+    event.stopPropagation();
+    event.target.style.cursor = 'default';
+  }
+  body.addEventListener('keydown', preventScroll, false);
+  body.addEventListener('click', activateCanvas, false);
+  canvas.addEventListener('mousedown', handleMouseDown, false);
+}
+        var Module = {
+            canvas: (function() { return document.getElementById('canvas'); })()
+        };
+    </script>
+        <script type='text/javascript'>
+       // Work-around chromium autoplay policy
+       // https://github.com/emscripten-core/emscripten/issues/6511
+       function resumeAudio(e) {
+ 	  if (typeof Module === 'undefined'
+ 	      || typeof Module.SDL2 == 'undefined'
+ 	      || typeof Module.SDL2.audioContext == 'undefined')
+ 	      return;
+ 	  if (Module.SDL2.audioContext.state == 'suspended') {
+ 	      Module.SDL2.audioContext.resume();
+ 	  }
+ 	  if (Module.SDL2.audioContext.state == 'running') {
+ 	      document.getElementById('canvas').removeEventListener('click', resumeAudio);
+ 	      document.removeEventListener('keydown', resumeAudio);
+ 	  }
+       }
+       document.getElementById('canvas').addEventListener('click', resumeAudio);
+       document.addEventListener('keydown', resumeAudio);
+     </script>
+    {{{ SCRIPT }}}
+</body>
+</html>
